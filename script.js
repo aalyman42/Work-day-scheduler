@@ -30,7 +30,7 @@ var timeBlock = $(".time-block");
 
 function color(now) {
   for (i = 0; i < timeBlock.length; i++) {
-    var areaColor = timeBlock[i].children[1];
+    var areaColor = $(timeBlock[i].children[1]);
     if (now.format("hA") == timeBlock[i].children[0].textContent) {
       console.log(areaColor);
       areaColor.addClass("present");
