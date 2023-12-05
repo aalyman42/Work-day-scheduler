@@ -31,13 +31,34 @@ var timeBlock = $(".time-block");
 function color(now) {
   for (i = 0; i < timeBlock.length; i++) {
     var areaColor = $(timeBlock[i].children[1]);
-    if (now.format("hA") == timeBlock[i].children[0].textContent) {
+    var divSelect = $(timeBlock[i].children[0]);
+    var contentPull = divSelect.text().replace(/A|M|P/g, "");
+    console.log(contentPull);
+    console.log(now.format("h"));
+    console.log(divSelect.text().slice(-2));
+    if (now.format("h") == contentPull) {
       console.log(areaColor);
       areaColor.addClass("present");
-    } else if (now.format("hA") > timeBlock[i].children[0].textContent) {
+    } else if (
+      (now.format("A") == "AM" && divSelect.text().slice(-2) == "PM") ||
+      (now.format("A") == "PM" &&
+        divSelect.text().slice(-2) == "PM" &&
+        now.format("h") < contentPull) ||
+      (now.format("A") == "AM" &&
+        divSelect.text().slice(-2) == "AM" &&
+        now.format("h") < contentPull)
+    ) {
       console.log(areaColor);
       areaColor.addClass("future");
-    } else if (now.format("hA") < timeBlock[i].children[0].textContent) {
+    } else if (
+      (now.format("A") == "PM" && divSelect.text().slice(-2) == "AM") ||
+      (now.format("A") == "PM" &&
+        divSelect.text().slice(-2) == "PM" &&
+        now.format("h") > contentPull) ||
+      (now.format("A") == "AM" &&
+        divSelect.text().slice(-2) == "AM" &&
+        now.format("h") > contentPull)
+    ) {
       console.log(areaColor);
       areaColor.addClass("past");
     }
