@@ -7,6 +7,11 @@ var now = dayjs();
 var textArea = $(".description");
 var hour = $(".hour");
 var timeBlock = $(".time-block");
+var savedItem = {
+  id: "",
+  content: "",
+};
+var savedItemArray = [];
 // $(function () {
 //   // TODO: Add a listener for click events on the save button. This code should
 //   // use the id in the containing time-block as a key to save the user input in
@@ -28,6 +33,11 @@ var timeBlock = $(".time-block");
 //   // TODO: Add code to display the current date in the header of the page.
 // });
 
+function init() {
+  currentDay.text("Today is: " + now.format("dddd MMM D, YYYY"));
+  color(now);
+}
+
 function color(now) {
   for (i = 0; i < timeBlock.length; i++) {
     var areaColor = $(timeBlock[i].children[1]);
@@ -46,12 +56,21 @@ function color(now) {
   }
 }
 
-function init() {
-  currentDay.text("Today is: " + now.format("dddd MMM D, YYYY"));
-  color(now);
+function pullStorage() {
+  var getStorage = localStorage.getItem("savedTasks");
+  var savedItemArray = JSON.parse(getStorage);
+  console.log(savedItemArray);
 }
-saveBtn.on("click", function (event) {
+timeBlock.on("click", "button", function (event) {
   event.preventDefault();
+  var findTimeBlock = $(this).parent(0);
+  var blockText = $(findTimeBlock.children("textarea")[0]).val();
+  savedItem.id = findTimeBlock.attr("id");
+  savedItem.content = blockText;
+  console.log(savedItem);
+  savedItemArray.push(savedItem);
+  var localSave = JSON.stringify(savedItemArray);
+  localStorage.setItem("savedTasks", localSave);
 });
 
 init();
