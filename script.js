@@ -8,10 +8,17 @@ var textArea = $(".description");
 var hour = $(".hour");
 var timeBlock = $(".time-block");
 var savedItem = {
-  id: "",
-  content: "",
+  h9: "",
+  h10: "",
+  h11: "",
+  h12: "",
+  h13: "",
+  h14: "",
+  h15: "",
+  h16: "",
+  h17: "",
 };
-var savedItemArray = [];
+// var savedItemArray = [];
 // $(function () {
 //   // TODO: Add a listener for click events on the save button. This code should
 //   // use the id in the containing time-block as a key to save the user input in
@@ -36,6 +43,7 @@ var savedItemArray = [];
 function init() {
   currentDay.text("Today is: " + now.format("dddd MMM D, YYYY"));
   color(now);
+  pullStorage();
 }
 
 function color(now) {
@@ -57,20 +65,75 @@ function color(now) {
 }
 
 function pullStorage() {
-  var getStorage = localStorage.getItem("savedTasks");
-  var savedItemArray = JSON.parse(getStorage);
-  console.log(savedItemArray);
+  var getStorage = localStorage.getItem("saved items");
+  var savedItem = JSON.parse(getStorage);
+  console.log(savedItem);
+  for (i = 0; i < timeBlock.length; i++) {
+    var blockText = $(timeBlock[i].children[1]);
+    if (timeBlock[i].id == "hour-9") {
+      blockText.text(savedItem.h9);
+    }
+    if (timeBlock[i].id == "hour-10") {
+      blockText.text(savedItem.h10);
+    }
+    if (timeBlock[i].id == "hour-11") {
+      blockText.text(savedItem.h11);
+    }
+    if (timeBlock[i].id == "hour-12") {
+      blockText.text(savedItem.h12);
+    }
+    if (timeBlock[i].id == "hour-13") {
+      blockText.text(savedItem.h13);
+    }
+    if (timeBlock[i].id == "hour-14") {
+      blockText.text(savedItem.h14);
+    }
+    if (timeBlock[i].id == "hour-15") {
+      blockText.text(savedItem.h15);
+    }
+    if (timeBlock[i].id == "hour-16") {
+      blockText.text(savedItem.h16);
+    }
+    if (timeBlock[i].id == "hour-17") {
+      blockText.text(savedItem.h17);
+    }
+  }
 }
+
 timeBlock.on("click", "button", function (event) {
   event.preventDefault();
-  var findTimeBlock = $(this).parent(0);
-  var blockText = $(findTimeBlock.children("textarea")[0]).val();
-  savedItem.id = findTimeBlock.attr("id");
-  savedItem.content = blockText;
-  console.log(savedItem);
-  savedItemArray.push(savedItem);
-  var localSave = JSON.stringify(savedItemArray);
-  localStorage.setItem("savedTasks", localSave);
+  for (i = 0; i < timeBlock.length; i++) {
+    var blockText = $(timeBlock[i].children[1]).val();
+    if (timeBlock[i].id == "hour-9") {
+      savedItem.h9 = blockText;
+    }
+    if (timeBlock[i].id == "hour-10") {
+      savedItem.h10 = blockText;
+    }
+    if (timeBlock[i].id == "hour-11") {
+      savedItem.h11 = blockText;
+    }
+    if (timeBlock[i].id == "hour-12") {
+      savedItem.h12 = blockText;
+    }
+    if (timeBlock[i].id == "hour-13") {
+      savedItem.h13 = blockText;
+    }
+    if (timeBlock[i].id == "hour-14") {
+      savedItem.h14 = blockText;
+    }
+    if (timeBlock[i].id == "hour-15") {
+      savedItem.h15 = blockText;
+    }
+    if (timeBlock[i].id == "hour-16") {
+      savedItem.h16 = blockText;
+    }
+    if (timeBlock[i].id == "hour-17") {
+      savedItem.h17 = blockText;
+    }
+  }
+  var stringStore = JSON.stringify(savedItem);
+  localStorage.setItem("saved items", stringStore);
 });
 
 init();
